@@ -10,6 +10,7 @@ export default function StudentDashboard() {
   const { user } = useAuth();
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -26,20 +27,18 @@ export default function StudentDashboard() {
     fetchComplaints();
   }, []);
 
-  const pending = complaints.filter((c) => c.status === "pending").length;
+  const pending  = complaints.filter((c) => c.status === "pending").length;
   const resolved = complaints.filter((c) => c.status === "resolved").length;
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
           <div className="page-header">
             <h1>Student Dashboard</h1>
-            <Link to="/create" className="btn btn-primary">
-              + New Complaint
-            </Link>
+            <Link to="/create" className="btn btn-primary">+ New Complaint</Link>
           </div>
 
           <div className="stats-grid">

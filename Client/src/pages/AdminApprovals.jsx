@@ -12,6 +12,7 @@ export default function AdminApprovals() {
   const [loading, setLoading]         = useState(true);
   const [actionId, setActionId]       = useState(null);
   const [search, setSearch]           = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const token = localStorage.getItem("token");
 
   const fetchData = async () => {
@@ -65,9 +66,9 @@ export default function AdminApprovals() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
 
           <div className="page-header">

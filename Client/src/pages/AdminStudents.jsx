@@ -7,6 +7,7 @@ export default function AdminStudents() {
   const [students, setStudents] = useState([]);
   const [search, setSearch]     = useState("");
   const [loading, setLoading]   = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -48,9 +49,9 @@ export default function AdminStudents() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
 
           <div className="page-header">

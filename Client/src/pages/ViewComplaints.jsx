@@ -14,6 +14,7 @@ export default function ViewComplaints() {
   const [loading, setLoading]         = useState(true);
   const [selected, setSelected]       = useState(null);
   const [actionLoading, setActionLoading] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -34,9 +35,16 @@ export default function ViewComplaints() {
     try {
       const token = localStorage.getItem("token");
       await updateStatus(id, status, token);
-      await fetchData();
-      // update modal if open
-      setSelected((prev) => prev?._id === id ? { ...prev, status } : prev);
+      // update the list in-place without a full refetch to avoid flicker
+      setComplaints((prev) =>
+        prev.map((c) => (c._id === id ? { ...c, status } : c))
+      );
+      // keep modal in sync — update status but do NOT close it
+      setSelected((prev) => (prev?._id === id ? { ...prev, status } : prev));
+      // background refresh to stay in sync with server
+      fetchData();
+    } catch (err) {
+      console.error("Failed to update status", err);
     } finally {
       setActionLoading(null);
     }
@@ -64,9 +72,9 @@ export default function ViewComplaints() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
 
           {/* Header */}
@@ -182,11 +190,7 @@ export default function ViewComplaints() {
                             >✘ Reject</button>
                           </div>
                         ) : (
-                          <button
-                            className="btn-action btn-reopen"
-                            disabled={!!actionLoading}
-                            onClick={() => handleStatus(c._id, "pending")}
-                          >↩ Reopen</button>
+                          <span className="admin-done">—</span>
                         )}
                       </td>
                     </tr>
@@ -242,14 +246,7 @@ export default function ViewComplaints() {
                   >✘ Reject</button>
                 </>
               )}
-              {selected.status !== "pending" && (
-                <button
-                  className="btn-action btn-reopen"
-                  style={{ padding: "0.5rem 1.25rem", fontSize: "0.9rem" }}
-                  disabled={!!actionLoading}
-                  onClick={() => handleStatus(selected._id, "pending")}
-                >↩ Reopen</button>
-              )}
+
               <button className="btn btn-outline" style={{ marginLeft: "auto" }} onClick={() => setSelected(null)}>
                 Close
               </button>

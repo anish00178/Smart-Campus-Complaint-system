@@ -1402,3 +1402,209 @@ body {
   font-weight: 600;
   text-decoration: underline;
 }
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE FIRST
+══════════════════════════════════════ */
+
+/* ── Hamburger button ── */
+.navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+.navbar-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.navbar-hamburger:hover { background: rgba(255,255,255,0.1); }
+
+/* ── Sidebar backdrop (mobile overlay) ── */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 149;
+}
+
+/* ── auth card mobile padding ── */
+@media (max-width: 480px) {
+  .auth-card { padding: 1.75rem 1.25rem; }
+}
+
+/* ══ TABLET  768px ══ */
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .navbar { padding: 0 1rem; height: 56px; }
+  .navbar-hamburger { display: flex; }
+  .navbar-title { font-size: 0.82rem; }
+  .navbar-logo { width: 34px; height: 34px; }
+  .navbar-dashboard-link { display: none; }        /* hide on mobile – already in sidebar */
+  .navbar-user-info { display: none; }             /* hide name/role – keep logout only */
+  .btn-logout { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+
+  /* Sidebar — slide in from left */
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    z-index: 150;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    width: 240px;
+    min-height: unset;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+  }
+  .sidebar-open { transform: translateX(0); }
+  .sidebar-backdrop { display: block; }
+
+  /* Main content — full width when sidebar is hidden */
+  .main-content { padding: 1.25rem 1rem; }
+
+  /* Page header stacks on very small screens */
+  .page-header { flex-wrap: wrap; gap: 0.5rem; }
+  .page-header h1 { font-size: 1.2rem; }
+
+  /* Stats grids */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .admin-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .ap-stat-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Complaint cards */
+  .complaints-grid { grid-template-columns: 1fr; }
+
+  /* Welcome banner stacks */
+  .admin-welcome-banner { flex-direction: column; align-items: flex-start; }
+  .admin-welcome-title { font-size: 1.1rem; }
+
+  /* Filter tabs wrap nicely */
+  .vc-filter-tabs { gap: 0.35rem; }
+  .vc-tab { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+
+  /* Modal full-width on mobile */
+  .modal-overlay { padding: 0.5rem; align-items: flex-end; }
+  .modal-card { border-radius: 16px 16px 0 0; max-height: 90vh; overflow-y: auto; }
+
+  /* Admin portal tab switcher */
+  .ap-header { flex-direction: column; align-items: flex-start; }
+  .ap-tab-switcher { width: 100%; }
+  .ap-tab-btn { flex: 1; text-align: center; }
+
+  /* Profile card stacks */
+  .profile-card { flex-direction: column; align-items: flex-start; }
+  .profile-edit-btn { margin-left: 0; }
+  .profile-fields { grid-template-columns: 1fr; }
+
+  /* Home header */
+  .home-header { height: auto; padding: 0.75rem 1rem; }
+  .home-logo-text { font-size: 1rem; }
+  .home-nav-btn { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+
+  /* Home hero */
+  .home-hero { padding: 3rem 1.25rem; flex-direction: column; gap: 2rem; text-align: center; }
+  .home-hero-actions { justify-content: center; }
+  .home-hero-badge { order: -1; }
+  .home-badge-circle { width: 120px; height: 120px; }
+
+  /* Home stats wrap */
+  .home-stats { padding: 2rem 1rem; }
+  .home-stat { padding: 0.75rem 1.25rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); width: 50%; }
+  .home-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+  .home-stat:last-child { border-bottom: none; }
+  .home-stat-num { font-size: 2rem; }
+
+  /* CTA banner */
+  .home-cta-banner { padding: 3rem 1.25rem; }
+  .home-cta-banner h2 { font-size: 1.3rem; }
+
+  /* Form card full width */
+  .form-card { padding: 1.25rem; }
+
+  /* Table — horizontal scroll already handled by admin-table-wrap */
+  .complaints-table th,
+  .complaints-table td { padding: 0.65rem 0.7rem; font-size: 0.82rem; }
+
+  /* Approval page */
+  .admin-toolbar { flex-direction: column; align-items: stretch; }
+  .admin-search { min-width: unset; width: 100%; }
+
+  /* reg-row stays 2 cols on tablet */
+}
+
+/* ══ MOBILE  480px ══ */
+@media (max-width: 480px) {
+
+  /* Navbar — hide title text on tiny screens */
+  .navbar-title { display: none; }
+  .navbar { padding: 0 0.75rem; }
+
+  /* Stats single column */
+  .stats-grid { grid-template-columns: 1fr; }
+  .admin-stats-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .admin-stat-num { font-size: 1.4rem; }
+
+  /* Main content tighter */
+  .main-content { padding: 1rem 0.75rem; }
+
+  /* Complaint card */
+  .complaint-card { padding: 1rem; }
+
+  /* branch/semester row stacks */
+  .reg-row { grid-template-columns: 1fr; }
+
+  /* modal full screen */
+  .modal-card { border-radius: 12px 12px 0 0; }
+  .modal-body { padding: 1rem; }
+  .modal-footer { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .modal-footer .btn { flex: 1; text-align: center; }
+
+  /* Home hero */
+  .home-hero-title { font-size: 1.7rem; }
+  .home-hero-sub { font-size: 0.9rem; }
+  .home-cta-btn { width: 100%; text-align: center; }
+  .home-hero-actions { flex-direction: column; }
+
+  /* Home stats single col */
+  .home-stat { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .home-stat:last-child { border-bottom: none; }
+
+  /* Section title smaller */
+  .home-section-title { font-size: 1.3rem; }
+
+  /* Profile */
+  .profile-wrapper { gap: 1rem; }
+  .profile-card { padding: 1.25rem; gap: 1rem; }
+  .profile-name { font-size: 1.1rem; }
+  .profile-avatar { width: 56px; height: 56px; font-size: 1.2rem; }
+  .profile-form { padding: 1.25rem; }
+
+  /* Admin welcome */
+  .admin-welcome-banner { padding: 1rem 1.25rem; }
+  .admin-welcome-title { font-size: 1rem; }
+
+  /* ap-stat-grid single col */
+  .ap-stat-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Form actions stack */
+  .form-actions { flex-direction: column-reverse; }
+  .form-actions .btn { width: 100%; text-align: center; }
+
+  /* filter tabs — full row */
+  .vc-filter-tabs { display: grid; grid-template-columns: 1fr 1fr; }
+  .vc-tab { justify-content: space-between; }
+}

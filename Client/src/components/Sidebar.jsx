@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getPendingStudents } from "../services/api";
 
-export default function Sidebar() {
+export default function Sidebar({ open, onClose }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,7 +15,6 @@ export default function Sidebar() {
     )
   );
 
-  // Poll pending approvals count for admin
   useEffect(() => {
     if (user?.role !== "admin") return;
     const load = async () => {
@@ -26,7 +25,7 @@ export default function Sidebar() {
       } catch {}
     };
     load();
-    const interval = setInterval(load, 30000); // refresh every 30s
+    const interval = setInterval(load, 30000);
     return () => clearInterval(interval);
   }, [user]);
 
@@ -35,95 +34,105 @@ export default function Sidebar() {
     navigate("/login");
   };
 
+  // close sidebar on route change (mobile)
+  useEffect(() => {
+    if (onClose) onClose();
+  }, [location.pathname]);
+
   return (
-    <aside className="sidebar">
-      <ul className="sidebar-menu">
+    <>
+      {/* Overlay backdrop on mobile */}
+      {open && <div className="sidebar-backdrop" onClick={onClose} />}
 
-        {/* ── Student menu ── */}
-        {user?.role === "student" && (
-          <>
-            <li>
-              <NavLink to="/student" className={({ isActive }) => isActive ? "active" : ""}>
-                🏠 Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/create" className={({ isActive }) => isActive ? "active" : ""}>
-                📝 Create Complaint
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
-                👤 My Profile
-              </NavLink>
-            </li>
-          </>
-        )}
+      <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
+        <ul className="sidebar-menu">
 
-        {/* ── Admin menu ── */}
-        {user?.role === "admin" && (
-          <>
-            <li>
-              <button
-                className={`sidebar-folder-btn ${adminOpen ? "sidebar-folder-open" : ""}`}
-                onClick={() => setAdminOpen((o) => !o)}
-              >
-                <span className="sidebar-folder-icon">🛡️</span>
-                <span className="sidebar-folder-label">Admin Panel</span>
-                {pendingCount > 0 && (
-                  <span className="sidebar-pending-dot">{pendingCount}</span>
+          {/* ── Student menu ── */}
+          {user?.role === "student" && (
+            <>
+              <li>
+                <NavLink to="/student" className={({ isActive }) => isActive ? "active" : ""}>
+                  🏠 Dashboard
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/create" className={({ isActive }) => isActive ? "active" : ""}>
+                  📝 Create Complaint
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
+                  👤 My Profile
+                </NavLink>
+              </li>
+            </>
+          )}
+
+          {/* ── Admin menu ── */}
+          {user?.role === "admin" && (
+            <>
+              <li>
+                <button
+                  className={`sidebar-folder-btn ${adminOpen ? "sidebar-folder-open" : ""}`}
+                  onClick={() => setAdminOpen((o) => !o)}
+                >
+                  <span className="sidebar-folder-icon">🛡️</span>
+                  <span className="sidebar-folder-label">Admin Panel</span>
+                  {pendingCount > 0 && (
+                    <span className="sidebar-pending-dot">{pendingCount}</span>
+                  )}
+                  <span className="sidebar-folder-arrow">{adminOpen ? "▾" : "▸"}</span>
+                </button>
+
+                {adminOpen && (
+                  <ul className="sidebar-submenu">
+                    <li>
+                      <NavLink to="/admin" end className={({ isActive }) => isActive ? "active" : ""}>
+                        <span className="sidebar-sub-icon">📊</span> Dashboard
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/admin/approvals" className={({ isActive }) => isActive ? "active" : ""}>
+                        <span className="sidebar-sub-icon">✅</span> Approvals
+                        {pendingCount > 0 && (
+                          <span className="sidebar-pending-dot" style={{ marginLeft: "auto" }}>{pendingCount}</span>
+                        )}
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/complaints" className={({ isActive }) => isActive ? "active" : ""}>
+                        <span className="sidebar-sub-icon">📋</span> All Complaints
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/admin/students" className={({ isActive }) => isActive ? "active" : ""}>
+                        <span className="sidebar-sub-icon">🎓</span> Students
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/admin/portal" className={({ isActive }) => isActive ? "active" : ""}>
+                        <span className="sidebar-sub-icon">🛡️</span> Admin Portal
+                      </NavLink>
+                    </li>
+                  </ul>
                 )}
-                <span className="sidebar-folder-arrow">{adminOpen ? "▾" : "▸"}</span>
-              </button>
+              </li>
 
-              {adminOpen && (
-                <ul className="sidebar-submenu">
-                  <li>
-                    <NavLink to="/admin" end className={({ isActive }) => isActive ? "active" : ""}>
-                      <span className="sidebar-sub-icon">📊</span> Dashboard
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/admin/approvals" className={({ isActive }) => isActive ? "active" : ""}>
-                      <span className="sidebar-sub-icon">✅</span> Approvals
-                      {pendingCount > 0 && (
-                        <span className="sidebar-pending-dot" style={{ marginLeft: "auto" }}>{pendingCount}</span>
-                      )}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/complaints" className={({ isActive }) => isActive ? "active" : ""}>
-                      <span className="sidebar-sub-icon">📋</span> All Complaints
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/admin/students" className={({ isActive }) => isActive ? "active" : ""}>
-                      <span className="sidebar-sub-icon">🎓</span> Students
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/admin/portal" className={({ isActive }) => isActive ? "active" : ""}>
-                      <span className="sidebar-sub-icon">🛡️</span> Admin Portal
-                    </NavLink>
-                  </li>
-                </ul>
-              )}
-            </li>
+              <li>
+                <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
+                  👤 My Profile
+                </NavLink>
+              </li>
+            </>
+          )}
+        </ul>
 
-            <li>
-              <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
-                👤 My Profile
-              </NavLink>
-            </li>
-          </>
-        )}
-      </ul>
-
-      <div className="sidebar-footer">
-        <button onClick={handleLogout} className="btn-sidebar-logout">
-          🚪 Logout
-        </button>
-      </div>
-    </aside>
+        <div className="sidebar-footer">
+          <button onClick={handleLogout} className="btn-sidebar-logout">
+            🚪 Logout
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

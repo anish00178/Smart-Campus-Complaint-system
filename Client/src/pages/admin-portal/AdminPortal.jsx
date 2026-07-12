@@ -14,7 +14,8 @@ export default function AdminPortal() {
   const [selected, setSelected]           = useState(null);
   const [actionLoading, setActionLoading] = useState(null);
   const [loading, setLoading]             = useState(true);
-  const [activeTab, setActiveTab]         = useState("complaints"); // "complaints" | "stats"
+  const [activeTab, setActiveTab]         = useState("complaints");
+  const [sidebarOpen, setSidebarOpen]     = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -73,9 +74,9 @@ export default function AdminPortal() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
 
           {/* ── Page header ── */}

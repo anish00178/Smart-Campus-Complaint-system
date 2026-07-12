@@ -9,8 +9,9 @@ export default function AdminDashboard() {
   const { user } = useAuth();
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading]       = useState(true);
-  const [selected, setSelected]     = useState(null); // modal
+  const [selected, setSelected]     = useState(null);
   const [actionLoading, setActionLoading] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchComplaints = async () => {
     try {
@@ -51,9 +52,9 @@ export default function AdminDashboard() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
 
           {/* ── Welcome banner ── */}

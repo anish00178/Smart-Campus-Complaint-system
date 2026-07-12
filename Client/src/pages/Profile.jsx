@@ -12,6 +12,7 @@ export default function Profile() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -64,9 +65,9 @@ export default function Profile() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
           <div className="page-header">
             <h1>My Profile</h1>

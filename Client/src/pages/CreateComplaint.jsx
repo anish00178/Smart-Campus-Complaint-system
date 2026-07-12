@@ -8,6 +8,7 @@ export default function CreateComplaint() {
   const [form, setForm] = useState({ title: "", description: "", image: null });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,9 +35,9 @@ export default function CreateComplaint() {
 
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen((o) => !o)} />
       <div className="layout-body">
-        <Sidebar />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="main-content">
           <div className="page-header">
             <h1>Submit a Complaint</h1>
