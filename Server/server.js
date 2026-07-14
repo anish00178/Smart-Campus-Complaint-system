@@ -6,6 +6,14 @@ const path = require("path");
 
 dotenv.config(); // must be before any route requires
 
+// Fail fast if critical env vars are missing
+const REQUIRED_ENV = ["MONGO_URI", "JWT_SECRET"];
+const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
+if (missing.length) {
+  console.error("Missing required environment variables:", missing.join(", "));
+  process.exit(1);
+}
+
 const app = express();
 
 const ALLOWED_ORIGINS = [
