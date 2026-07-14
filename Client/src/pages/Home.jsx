@@ -35,26 +35,28 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="home-hero">
-        <div className="home-hero-content">
-          <p className="home-hero-tag">Smart Campus Complaint System</p>
-          <h1 className="home-hero-title">
-            Barak Valley <span>Engineering College</span>
-          </h1>
-          <p className="home-hero-sub">
-            Raise, track, and resolve campus complaints — all in one place.
-          </p>
-          <div className="home-hero-actions">
-            <Link to="/register" className="btn btn-primary home-cta-btn">Get Started</Link>
-            <Link to="/login"    className="btn btn-outline home-cta-btn">Sign In</Link>
+        <div className="home-hero-inner">
+          <div className="home-hero-content">
+            <p className="home-hero-tag">✦ Smart Campus Complaint System</p>
+            <h1 className="home-hero-title">
+              Barak Valley <span>Engineering College</span>
+            </h1>
+            <p className="home-hero-sub">
+              A unified platform to raise, track, and resolve campus complaints — making BVEC better for everyone.
+            </p>
+            <div className="home-hero-actions">
+              <Link to="/register" className="btn btn-primary home-cta-btn">Get Started</Link>
+              <Link to="/login"    className="btn btn-outline home-cta-btn">Sign In</Link>
+            </div>
           </div>
-        </div>
-        <div className="home-hero-badge">
-          <div className="home-badge-circle">
-            <img src={bvecLogo} alt="BVEC Logo" className="home-badge-logo" />
-          </div>
-          <div className="home-badge-info">
-            <span className="home-badge-label">BVEC</span>
-            <span className="home-badge-sub">Est. 2008, Sribhumi</span>
+          <div className="home-hero-badge">
+            <div className="home-badge-circle">
+              <img src={bvecLogo} alt="BVEC Logo" className="home-badge-logo" />
+            </div>
+            <div className="home-badge-info">
+              <span className="home-badge-label">BVEC</span>
+              <span className="home-badge-sub">Est. 2008, Sribhumi</span>
+            </div>
           </div>
         </div>
       </section>
