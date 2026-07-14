@@ -7,8 +7,11 @@ const userSchema = new mongoose.Schema(
     email:    { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     rollNo:     { type: String, trim: true, default: null, sparse: true },
-    branch:     { type: String, enum: ["CSE", "CE", "ETE", "ME"], default: null },
-    semester:   { type: Number, min: 1, max: 8, default: null },
+    branch:     { type: String, enum: ["CSE", "CE", "ETE", "ME", null], default: null },
+    semester:   { type: Number, min: 1, max: 8, default: null, validate: {
+      validator: (v) => v === null || (v >= 1 && v <= 8),
+      message: "Semester must be between 1 and 8",
+    }},
     role:       { type: String, enum: ["student", "admin"], default: "student" },
     isApproved: { type: Boolean, default: false },
     idCard:     { type: String, default: null },  // uploaded filename

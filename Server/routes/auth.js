@@ -68,13 +68,34 @@ router.post("/admin/register", async (req, res) => {
   try {
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: "Email already registered" });
-    const user = await User.create({ name, email, password, role: "admin", rollNo: null, isApproved: true });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: "admin",
+      rollNo: null,
+      branch: null,
+      semester: null,
+      isApproved: true,
+    });
+    const token = generateToken(user._id);
     res.status(201).json({
-      token: generateToken(user._id),
+      token,
       user: { _id: user._id, name: user.name, email: user.email, role: user.role },
     });
   } catch (err) {
-    console.error("Admin register error:", err.message);
+    console.error("Admin register error — name:", err.name);
+    console.error("Admin register error — message:", err.message);
+    console.error("Admin register error — stack:", err.stack);
+    // Mongoose validation error — return readable message
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map((e) => e.message).join(", ");
+      return res.status(400).json({ message: messages });
+    }
+    // Duplicate key error (e.g. email already exists but findOne missed it in a race)
+    if (err.code === 11000) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
