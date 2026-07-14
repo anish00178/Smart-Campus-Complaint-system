@@ -118,6 +118,9 @@ export default function AdminRegister() {
 
           <div className="form-group">
             <label htmlFor="adminSecret">Admin Secret Key</label>
+            <div className="admin-secret-info">
+              🔑 Secret key: <strong>admin@campus2026</strong>
+            </div>
             <div className="input-pwd-wrap">
               <input
                 id="adminSecret"
@@ -137,7 +140,7 @@ export default function AdminRegister() {
                 {showSecret ? "🙈" : "👁️"}
               </button>
             </div>
-            <p className="admin-secret-note">🔑 Contact your system administrator for the secret key</p>
+            <p className="admin-secret-note">🔑 Secret key: <code>admin@campus2026</code></p>
           </div>
 
           <button

@@ -61,7 +61,8 @@ router.post("/admin/register", async (req, res) => {
   const { name, email, password, adminSecret } = req.body;
   if (!name || !email || !password || !adminSecret)
     return res.status(400).json({ message: "All fields are required" });
-  const ADMIN_SECRET = process.env.ADMIN_SECRET || "admin@campus2024";
+  const ADMIN_SECRET = process.env.ADMIN_SECRET || "admin@campus2026";
+  console.log("Admin register attempt — secret match:", adminSecret.trim() === ADMIN_SECRET.trim());
   if (adminSecret.trim() !== ADMIN_SECRET.trim())
     return res.status(403).json({ message: "Invalid admin secret key" });
   try {
