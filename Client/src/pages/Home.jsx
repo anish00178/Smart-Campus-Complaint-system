@@ -2,32 +2,24 @@ import { Link } from "react-router-dom";
 import bvecLogo from "../assets/logoNew.png";
 
 const features = [
-  {
-    icon: "📝",
-    title: "Submit Complaints",
-    desc: "Easily raise issues related to infrastructure, academics, hostel, or any campus facility.",
-  },
-  {
-    icon: "📊",
-    title: "Track Status",
-    desc: "Monitor status of your complaints — pending, in-progress, or resolved.",
-  },
-  {
-    icon: "🔒",
-    title: "Secure & Private",
-    desc: "Your identity and data are protected. Only authorised admins can view complaint details.",
-  },
-  {
-    icon: "⚡",
-    title: "Fast Resolution",
-    desc: "Complaints are routed directly to the concerned department for quick action.",
-  },
+  { icon: "📝", title: "Submit Complaints", desc: "Raise issues on infrastructure, academics, hostel, or any campus facility." },
+  { icon: "📊", title: "Track Status",      desc: "Monitor your complaints — pending, in-progress, or resolved." },
+  { icon: "🔒", title: "Secure & Private",  desc: "Your data is protected. Only authorised admins can view details." },
+  { icon: "⚡", title: "Fast Resolution",   desc: "Complaints are routed to the concerned department for quick action." },
+];
+
+const stats = [
+  { num: "800+", label: "Students" },
+  { num: "4+",   label: "Departments" },
+  { num: "98%",  label: "Resolution Rate" },
+  { num: "24/7", label: "Portal Access" },
 ];
 
 export default function Home() {
   return (
     <div className="home">
-      {/* ── Top bar ── */}
+
+      {/* ── Header ── */}
       <header className="home-header">
         <div className="home-header-inner">
           <div className="home-logo">
@@ -35,7 +27,7 @@ export default function Home() {
             <span className="home-logo-text">BVEC</span>
           </div>
           <nav className="home-nav">
-            <Link to="/login" className="btn btn-outline home-nav-btn">Login</Link>
+            <Link to="/login"    className="btn btn-outline home-nav-btn">Login</Link>
             <Link to="/register" className="btn btn-primary home-nav-btn">Register</Link>
           </nav>
         </div>
@@ -46,15 +38,14 @@ export default function Home() {
         <div className="home-hero-content">
           <p className="home-hero-tag">Smart Campus Complaint System</p>
           <h1 className="home-hero-title">
-            Barak Valley<br /><span>Engineering College</span>
+            Barak Valley <span>Engineering College</span>
           </h1>
           <p className="home-hero-sub">
-            A unified platform for students to raise, track, and resolve campus
-            complaints — making BVEC a better place for everyone.
+            Raise, track, and resolve campus complaints — all in one place.
           </p>
           <div className="home-hero-actions">
             <Link to="/register" className="btn btn-primary home-cta-btn">Get Started</Link>
-            <Link to="/login" className="btn btn-outline home-cta-btn">Sign In</Link>
+            <Link to="/login"    className="btn btn-outline home-cta-btn">Sign In</Link>
           </div>
         </div>
         <div className="home-hero-badge">
@@ -62,10 +53,20 @@ export default function Home() {
             <img src={bvecLogo} alt="BVEC Logo" className="home-badge-logo" />
           </div>
           <div className="home-badge-info">
-            <span className="home-badge-label">Estd. 2017</span>
-            <span className="home-badge-sub">Sribhumi</span>
+            <span className="home-badge-label">BVEC</span>
+            <span className="home-badge-sub">Est. 2008, Sribhumi</span>
           </div>
         </div>
+      </section>
+
+      {/* ── Stats ── */}
+      <section className="home-stats">
+        {stats.map((s) => (
+          <div key={s.label} className="home-stat">
+            <span className="home-stat-num">{s.num}</span>
+            <span className="home-stat-label">{s.label}</span>
+          </div>
+        ))}
       </section>
 
       {/* ── Features ── */}
@@ -83,37 +84,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section className="home-stats">
-        <div className="home-stat">
-          <span className="home-stat-num">800+</span>
-          <span className="home-stat-label">Students</span>
-        </div>
-        <div className="home-stat">
-          <span className="home-stat-num">4+</span>
-          <span className="home-stat-label">Departments</span>
-        </div>
-        <div className="home-stat">
-          <span className="home-stat-num">98%</span>
-          <span className="home-stat-label">Resolution Rate</span>
-        </div>
-        <div className="home-stat">
-          <span className="home-stat-num">24/7</span>
-          <span className="home-stat-label">Portal Access</span>
-        </div>
-      </section>
-
-      {/* ── CTA Banner ── */}
+      {/* ── CTA ── */}
       <section className="home-cta-banner">
         <h2>Have a complaint? Let us know.</h2>
-        <p>Register now and submit your first complaint in under a minute.</p>
+        <p>Register and submit your first complaint in under a minute.</p>
         <Link to="/register" className="btn btn-primary home-cta-btn">Create an Account</Link>
       </section>
 
       {/* ── Footer ── */}
       <footer className="home-footer">
-        <p>© {new Date().getFullYear()} Barak Valley Engineering College, Sribhumi — All rights reserved.</p>
+        © {new Date().getFullYear()} Barak Valley Engineering College, Sribhumi — All rights reserved.
       </footer>
+
     </div>
   );
 }
