@@ -25,8 +25,10 @@ const uploadIdCard = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-const generateToken = (id) =>
-  jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+const generateToken = (id) => {
+  if (!process.env.JWT_SECRET) throw new Error("JWT_SECRET environment variable is not set");
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+};
 
 // POST /api/auth/register  — student registers as pending (isApproved: false)
 router.post("/register", uploadIdCard.single("idCard"), async (req, res) => {
