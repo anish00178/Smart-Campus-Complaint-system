@@ -1,7 +1,7 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { getPendingStudents } from "../services/api";
+import { getPendingStudents, BASE_URL } from "../services/api";
 
 export default function Sidebar({ open, onClose }) {
   const { user, logout } = useAuth();

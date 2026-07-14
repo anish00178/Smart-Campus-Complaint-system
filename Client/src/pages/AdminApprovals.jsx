@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPendingStudents, approveStudent, rejectStudent, getAllStudents } from "../services/api";
+import { getPendingStudents, approveStudent, rejectStudent, getAllStudents, BASE_URL } from "../services/api";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -154,12 +154,12 @@ export default function AdminApprovals() {
                       <td>
                         {s.idCard ? (
                           s.idCard.endsWith(".pdf") ? (
-                            <a href={`http://localhost:5000/uploads/${s.idCard}`} target="_blank" rel="noreferrer" className="reg-idcard-link">
+                            <a href={`${BASE_URL}/uploads/${s.idCard}`} target="_blank" rel="noreferrer" className="reg-idcard-link">
                               📄 View PDF
                             </a>
                           ) : (
-                            <a href={`http://localhost:5000/uploads/${s.idCard}`} target="_blank" rel="noreferrer">
-                              <img src={`http://localhost:5000/uploads/${s.idCard}`} alt="ID Card" className="admin-thumb" style={{ borderRadius: "6px" }} />
+                            <a href={`${BASE_URL}/uploads/${s.idCard}`} target="_blank" rel="noreferrer">
+                              <img src={`${BASE_URL}/uploads/${s.idCard}`} alt="ID Card" className="admin-thumb" style={{ borderRadius: "6px" }} />
                             </a>
                           )
                         ) : <span className="admin-done">—</span>}

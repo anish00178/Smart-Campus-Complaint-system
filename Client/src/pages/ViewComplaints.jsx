@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getComplaints, updateStatus } from "../services/api";
+import { getComplaints, updateStatus, BASE_URL } from "../services/api";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -164,8 +164,8 @@ export default function ViewComplaints() {
                       </td>
                       <td>
                         {c.image ? (
-                          <a href={`http://localhost:5000/uploads/${c.image}`} target="_blank" rel="noreferrer">
-                            <img src={`http://localhost:5000/uploads/${c.image}`} alt="complaint" className="admin-thumb" />
+                          <a href={`${BASE_URL}/uploads/${c.image}`} target="_blank" rel="noreferrer">
+                            <img src={`${BASE_URL}/uploads/${c.image}`} alt="complaint" className="admin-thumb" />
                           </a>
                         ) : <span className="admin-done">—</span>}
                       </td>
@@ -220,9 +220,9 @@ export default function ViewComplaints() {
               </div>
               <p className="modal-desc">{selected.description}</p>
               {selected.image && (
-                <a href={`http://localhost:5000/uploads/${selected.image}`} target="_blank" rel="noreferrer">
+                <a href={`${BASE_URL}/uploads/${selected.image}`} target="_blank" rel="noreferrer">
                   <img
-                    src={`http://localhost:5000/uploads/${selected.image}`}
+                    src={`${BASE_URL}/uploads/${selected.image}`}
                     alt="complaint"
                     className="modal-img"
                   />

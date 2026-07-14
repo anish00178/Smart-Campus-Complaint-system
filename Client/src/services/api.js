@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const BASE_URL = "https://smart-campus-complaint-system-pnz7.onrender.com";
+
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: `${BASE_URL}/api`,
 });
 
 export const loginUser = (data) => API.post("/auth/login", data);

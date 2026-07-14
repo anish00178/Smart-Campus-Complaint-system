@@ -1,3 +1,5 @@
+import { BASE_URL } from "../services/api";
+
 export default function ComplaintCard({ complaint, onUpdate }) {
   const statusColor = {
     pending: "#f59e0b",
@@ -19,7 +21,7 @@ export default function ComplaintCard({ complaint, onUpdate }) {
       <p className="complaint-description">{complaint.description}</p>
       {complaint.image && (
         <img
-          src={`http://localhost:5000/uploads/${complaint.image}`}
+          src={`${BASE_URL}/uploads/${complaint.image}`}
           alt="complaint"
           className="complaint-image"
         />

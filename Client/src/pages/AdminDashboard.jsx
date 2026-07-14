@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getComplaints, updateStatus } from "../services/api";
+import { getComplaints, updateStatus, BASE_URL } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -180,7 +180,7 @@ export default function AdminDashboard() {
               <p className="modal-desc">{selected.description}</p>
               {selected.image && (
                 <img
-                  src={`http://localhost:5000/uploads/${selected.image}`}
+                  src={`${BASE_URL}/uploads/${selected.image}`}
                   alt="complaint"
                   className="modal-img"
                 />
