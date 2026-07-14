@@ -8,12 +8,22 @@ dotenv.config(); // must be before any route requires
 
 const app = express();
 
+const ALLOWED_ORIGINS = [
+  /^http:\/\/localhost(:\d+)?$/,           // any localhost port (dev)
+  "https://bvec-smart-campus-complaint-system.vercel.app", // production
+];
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow any localhost origin (any port) for development
-    if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin)) {
+    // allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    const allowed = ALLOWED_ORIGINS.some((o) =>
+      typeof o === "string" ? o === origin : o.test(origin)
+    );
+    if (allowed) {
       callback(null, true);
     } else {
+      console.warn("CORS blocked origin:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
