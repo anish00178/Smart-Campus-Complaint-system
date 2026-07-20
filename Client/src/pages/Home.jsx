@@ -55,7 +55,7 @@ export default function Home() {
             </div>
             <div className="home-badge-info">
               <span className="home-badge-label">BVEC</span>
-              <span className="home-badge-sub">Est. 2008, Sribhumi</span>
+              <span className="home-badge-sub">Estd. 2017, Sribhumi</span>
             </div>
           </div>
         </div>
